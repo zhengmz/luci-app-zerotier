@@ -1,0 +1,26 @@
+#!/bin/sh
+
+zt0="$(ifconfig | grep 'zt' | awk '{print $1}')"
+[ -z "${zt0}" ] && zt0="$(cat "/tmp/zt.nif")"
+
+[ -x "$(command -v nft)" ] && FW="fw4" || FW="fw3"
+for i in ${zt0}
+do
+	ip_segment=""
+	ip_segment="$(ip route | grep "dev $i proto" | awk '{print $1}')"
+	[ "$FW" = "fw3" ] && {
+		iptables -D FORWARD -i "$i" -j ACCEPT 2>/dev/null
+		iptables -D FORWARD -o "$i" -j ACCEPT 2>/dev/null
+		iptables -t nat -D POSTROUTING -o "$i" -j MASQUERADE 2>/dev/null
+		iptables -t nat -D POSTROUTING -s "${ip_segment}" -j MASQUERADE 2>/dev/null
+	} || {
+		chains="forward srcnat"
+		for c in $chains; do
+			handles=$(nft -a list chain inet fw4 $c | grep -E "$i|$ip_segment" | cut -d'#' -f2 | cut -d' ' -f3)
+			for h in $handles; do
+				nft delete rule inet fw4 $c handle $h
+			done
+		done
+	}
+	echo "zt interface $i is stopped!"
+done
