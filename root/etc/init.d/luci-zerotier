@@ -9,7 +9,7 @@ CONFIG_PATH=/var/lib/zerotier-one
 
 service_triggers() {
 	procd_add_reload_trigger "zerotier"
-	procd_add_interface_trigger "interface.*.up" wan /etc/init.d/zerotier restart
+	procd_add_interface_trigger "interface.*.up" wan /etc/init.d/luci-zerotier restart
 }
 
 section_enabled() {
@@ -108,6 +108,11 @@ stop_service() {
 }
 
 reload_service() {
-	stop
-	start
+	stop_service
+	sleep 1
+	start_service
+}
+
+restart() {
+	reload_service
 }

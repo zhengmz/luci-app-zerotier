@@ -32,5 +32,7 @@ echo "${zt0}" > "/tmp/zt.nif"
 			nft insert rule inet fw4 srcnat oifname "$i" counter masquerade
 			nft insert rule inet fw4 srcnat ip saddr "${ip_segment}" counter masquerade
 		}
+		echo "zt interface $i is started!"
 	done
 }
+
