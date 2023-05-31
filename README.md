@@ -12,8 +12,8 @@ ZeroTier Manager for LuCI / 适用于 LuCI 的 ZeroTier 管理插件
 
 增强的功能：
 
-- 支持官方 OpenWrt 22.03+ 的 fw4
-- [在使用官方固件生成时，与包 package/zerotier 冲突](https://github.com/coolsnowwolf/luci/pull/172)
+- 支持官方 OpenWrt 22.03+ 的 fw4 nftables
+- 在使用官方 `imagebuilder` 时，解决[与包 package/zerotier 冲突](https://github.com/coolsnowwolf/luci/pull/172)
 - 修复部分问题: restart / reload 无法达到预期
 
 ## Depends / 依赖
@@ -31,9 +31,15 @@ git clone --depth=1 https://github.com/zhengmz/luci-app-zerotier.git package/luc
 
 # 可能要更新 feeds
 ./scripts/feeds update -a
+./scripts/feeds install -f luci-app-zerotier
 
 # 编译
 make package/luci-app-zerotier/compile
+
+# 结果存放在 bin/packages/x86_64/base 目录
+# 有两个文件
+luci-app-zerotier*.ipk
+luci-i18n-zerotier-zh-cn*.ipk
 ```
 
 ## Usage / 使用
