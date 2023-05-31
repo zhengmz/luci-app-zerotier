@@ -26,12 +26,16 @@ ZeroTier Manager for LuCI / 适用于 LuCI 的 ZeroTier 管理插件
 ```shell
 # 进入 OpenWrt SDK 目录，建议使用镜像如 openwrt/sdk:x86-64-22.03.5
 
-# 拷贝到合适目录，如
-git clone --depth=1 https://github.com/zhengmz/luci-app-zerotier.git package/luci-app-zerotier
-
-# 可能要更新 feeds
+# 要更新 feeds，获取 feeds/luci/applications 目录
 ./scripts/feeds update -a
-./scripts/feeds install -f luci-app-zerotier
+
+# 拷贝到合适目录，如
+git clone --depth=1 https://github.com/zhengmz/luci-app-zerotier.git feeds/luci/applications/luci-app-zerotier
+
+# 安装 luci-app-zerotier
+./scripts/feeds update -p luci
+./scripts/feeds install -p luci -f luci-app-zerotier
+make defconfig
 
 # 编译
 make package/luci-app-zerotier/compile
