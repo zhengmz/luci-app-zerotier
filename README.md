@@ -1,8 +1,8 @@
 # luci-app-zerotier
 
-LuCI for ZeroTier / ZeroTier 的 LUCI 管理界面
+LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
 
-- 用于加入 ZeroTier 网络的 LUCI 管理界面
+- 用于加入 ZeroTier 网络的 LuCI 管理界面
 - 使用脚本动态实现 NAT 功能（多子网互连），更具灵活、方便
 - 适用于 OpenWrt 官方和 [LEDE](https://github.com/coolsnowwolf/lede)
 
@@ -26,7 +26,8 @@ LuCI for ZeroTier / ZeroTier 的 LUCI 管理界面
 ## Compile / 编译
 
 ```shell
-# 进入 OpenWrt SDK 目录，建议使用 Docker 镜像如 openwrt/sdk:x86-64-22.03.5
+# 进入 OpenWrt SDK 目录，建议使用 Docker，如:
+docker run -it -v $PWD/bin:/builder/bin openwrt/sdk:x86-64-22.03.5 bash
 
 # 要更新 feeds
 #   - 获取 feeds/luci/luci.mk
@@ -46,13 +47,9 @@ make defconfig
 make package/luci-app-zerotier/compile
 
 # 结果
-# luci-app-zerotier 有两个文件
 # 存放在 bin/packages/x86_64/luci 目录
 luci-app-zerotier*.ipk
 luci-i18n-zerotier-zh-cn*.ipk
-# 同时也会编译出来依赖包 zerotier
-# 存放在 bin/packages/x86_64/packages/zerotier*.ipk
-# 此包可不用，使用官方或镜像仓库中最新的 zerotier 包
 ```
 
 ## Usage / 使用
