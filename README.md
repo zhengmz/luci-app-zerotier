@@ -3,12 +3,12 @@
 ZeroTier Manager for LuCI / 适用于 LuCI 的 ZeroTier 管理插件
 
 - 用于管理 zerotier 加入网络
-- 并增强功能，实现 NAT 功能，多子网互连
+- 使用脚本动态实现 NAT 功能（多子网互连），更具灵活、方便
 - 适用于 OpenWrt 官方和 LEDE
 
 本项目从 <https://github.com/coolsnowwolf/luci> 拷贝过来
 
-因原项目不支持，而且[不准备支持 fw4](https://github.com/coolsnowwolf/luci/pull/230)，所以克隆出来
+因原项目[不支持且不考虑支持 fw4](https://github.com/coolsnowwolf/luci/pull/230)，所以克隆出来
 
 增强的功能：
 
@@ -24,16 +24,27 @@ ZeroTier Manager for LuCI / 适用于 LuCI 的 ZeroTier 管理插件
 ## Compile / 编译
 
 ```shell
+# 进入 OpenWrt SDK 目录，建议使用镜像如 openwrt/sdk:x86-64-22.03.5
+
+# 拷贝到合适目录，如
+git clone --depth=1 https://github.com/zhengmz/luci-app-zerotier.git package/luci-app-zerotier
+
+# 可能要更新 feeds
+./scripts/feeds update -a
+
+# 编译
 make package/luci-app-zerotier/compile
 ```
 
 ## Usage / 使用
 
 ```shell
-# 禁用原有 zerotier
+# 与 zerotier 服务有冲突，建议禁用，两种方式
+
+# 1. 使用禁用命令
 /etc/init.d/zerotier disable
 
-# 定制固件时增加参数
+# 2. 定制固件时增加参数
 DISABLED_SERVICES="zerotier"
 ```
 
