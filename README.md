@@ -14,9 +14,11 @@ LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
 
 - 支持官方 OpenWrt 22.03+ 的 fw4 nftables
 - 支持官方 OpenWrt 中文使用 `po/zh_Hans`
-- 在使用官方 `imagebuilder` 时，解决[与包 package/zerotier 冲突](https://github.com/coolsnowwolf/luci/pull/172)
-- 修复部分问题: restart / reload 无法达到预期
 - 支持在非 luci 目录下也可以编译
+- 在使用官方 `imagebuilder` 时，解决[与包 package/zerotier 冲突](https://github.com/coolsnowwolf/luci/pull/172)
+- 修复部分问题:
+  - restart / reload 无法达到预期
+  - 在有静态路由时，停止服务无法删除 src nat 规则
 
 ## Depends / 依赖
 
