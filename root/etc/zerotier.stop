@@ -7,7 +7,7 @@ zt0="$(ifconfig | grep 'zt' | awk '{print $1}')"
 for i in ${zt0}
 do
 	ip_segment=""
-	ip_segment="$(ip route | grep "dev $i proto" | awk '{print $1}')"
+	ip_segment="$(ip route | grep "dev $i proto kernel" | awk '{print $1}')"
 	if [ "$FW" = "fw3" ]; then
 		iptables -D FORWARD -i "$i" -j ACCEPT 2>/dev/null
 		iptables -D FORWARD -o "$i" -j ACCEPT 2>/dev/null
