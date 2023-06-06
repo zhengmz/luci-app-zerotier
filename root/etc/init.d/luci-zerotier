@@ -108,9 +108,9 @@ stop_service() {
 }
 
 reload_service() {
-	stop_service
+	stop
 	sleep 1
-	start_service
+	start
 }
 
 restart() {
