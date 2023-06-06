@@ -95,7 +95,7 @@ stop_instance() {
   rm -f /tmp/zero.log
 	local cfg="$1"
 
-	/etc/zerotier.stop > /tmp/zero.log 2>&1 &
+	/etc/zerotier.stop > /tmp/zero.log 2>&1
 
 	# Remove existing link or folder
 	rm -f $CONFIG_PATH/networks.d/*.conf
@@ -109,10 +109,6 @@ stop_service() {
 
 reload_service() {
 	stop
-	sleep 1
 	start
 }
 
-restart() {
-	reload_service
-}
