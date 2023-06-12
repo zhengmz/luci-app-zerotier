@@ -1,15 +1,18 @@
 #!/bin/sh
 
+# luci-zerotier 脚本中含有 'USE_PROCD=?'，即使只是注释
+# 都无法使用 ucitrack 配置
+# 即使用 PROCD 只能使用其 service_triggers 接口来添加依赖
 uci -q batch <<-EOF >/dev/null
 	delete ucitrack.@zerotier[-1]
 	add ucitrack zerotier
-	set ucitrack.@zerotier[-1].init=luci-zerotier
+	set ucitrack.@zerotier[-1].init='luci-zerotier'
 	commit ucitrack
 
 	delete firewall.zerotier
 	set firewall.zerotier=include
 	set firewall.zerotier.type=script
-	set firewall.zerotier.path=/etc/zerotier.start
+	set firewall.zerotier.path='/usr/share/zerotier/firewall.include'
 	set firewall.zerotier.reload=1
 	commit firewall
 EOF
