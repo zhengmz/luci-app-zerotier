@@ -10,7 +10,16 @@ LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
 
 因原项目[不支持且不考虑支持 fw4](https://github.com/coolsnowwolf/luci/pull/230)，所以克隆出来
 
-增强的功能：
+## Changelog / 更新日志
+
+### v2.0
+
+从 2.0 开始，此包只做为 zeroiter 包的辅助
+
+- 需要使用用官方的 `packages/zerotier` 来启动 zerotier 服务
+- 辅助脚本只实现 NAT 的打开与关闭功能
+
+### v1.1
 
 - 支持官方 OpenWrt 22.03+ 的 fw4 nftables
 - 支持官方 OpenWrt 中文使用 `po/zh_Hans`
