@@ -42,23 +42,24 @@ e.rmempty = true
 e.size = 80
 e:depends("more","1")
 
-e = t:option(Value, "local_conf", translate("Local configuration"))
-e.description = translate("Path to the local.conf")
-e.placeholder = "/etc/zerotier.conf"
-e.rmempty = true
-e.datatype = "file"
-e:depends("more","1")
-
 e = t:option(Value, "config_path", translate("Configuration folder"))
 e.description = translate("Persistent configuration folder (for ZT controller mode)")
 e.placeholder = "/etc/zerotier"
 e.rmempty = true
+--allow create
 --e.datatype = "directory"
 e:depends("more","1")
 
 e = t:option(Flag, "copy_config_path", translate("Copy configuration folder"))
 e.description = translate("Copy configuration folder to RAM to prevent writing to flash (for ZT controller mode)")
 e.rmempty = true
+e:depends("more","1")
+
+e = t:option(Value, "local_conf", translate("Local configuration"))
+e.description = translate("Path to the local.conf")
+e.placeholder = "/etc/zerotier.conf"
+e.rmempty = true
+e.datatype = "file"
 e:depends("more","1")
 
 e = t:option(DummyValue, "opennewwindow", translate("<input type=\"button\" class=\"cbi-button cbi-button-apply\" value=\"Zerotier.com\" onclick=\"window.open('https://my.zerotier.com/network')\" />"))

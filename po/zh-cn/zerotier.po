@@ -20,28 +20,28 @@ msgid "More options"
 msgstr "更多选项"
 
 msgid "Port of zerotier service, default 9993"
-msgstr "ZeroTier 服务端口，默认是 9993"
+msgstr "ZeroTier 运行端口，默认是 9993"
 
 msgid "Secret"
-msgstr "密钥"
+msgstr "节点密钥"
 
 msgid "Secret of zerotier client"
-msgstr "本节点的密钥，请不要随意更改，留空会自动创建"
+msgstr "密钥对应节点ID，留空会自动创建，谨慎修改"
+
+msgid "Configuration folder"
+msgstr "运行配置目录"
+
+msgid "Persistent configuration folder (for ZT controller mode)"
+msgstr "持久化配置目录（一般用于控制器模式），默认为空"
+
+msgid "Copy configuration folder"
+msgstr "运行配置目录保护"
+
+msgid "Copy configuration folder to RAM to prevent writing to flash (for ZT controller mode)"
+msgstr "使用拷贝而不是链接，来保护原目录内容（一般用于预先配置的控制器模式）"
 
 msgid "Local configuration"
 msgstr "本地配置文件"
 
 msgid "Path to the local.conf"
-msgstr "local.conf 的配置文件，如 /etc/zerotier.conf"
-
-msgid "Configuration folder"
-msgstr "配置目录"
-
-msgid "Persistent configuration folder (for ZT controller mode)"
-msgstr "持久化配置目录（一般用于控制器模式）"
-
-msgid "Copy configuration folder"
-msgstr "拷贝配置目录"
-
-msgid "Copy configuration folder to RAM to prevent writing to flash (for ZT controller mode)"
-msgstr "拷贝配置目录来保护原有内容（一般用于预先配置的控制器模式）"
+msgstr "配置文件将映射到运行配置目录下的 local.conf，默认为空"
