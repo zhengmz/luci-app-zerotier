@@ -12,6 +12,10 @@ LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
 
 ## Changelog / 更新日志
 
+### v2.1
+
+- 配置页面支持所有选项
+
 ### v2.0
 
 从 2.0 开始，此包只做为 zeroiter 包的辅助
@@ -66,7 +70,7 @@ luci-i18n-zerotier-zh-cn*.ipk
 ## Usage / 使用
 
 ```shell
-# 与 zerotier 服务有冲突，建议禁用，两种方式
+# 与 zerotier 服务有冲突，建议禁用，两种方式 (Only For v1.1)
 
 # 1. 使用禁用命令
 /etc/init.d/zerotier disable

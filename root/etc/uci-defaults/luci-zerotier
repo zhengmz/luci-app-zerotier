@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# luci-zerotier 脚本中含有 'USE_PROCD=?'，即使只是注释
-# 都无法使用 ucitrack 配置
-# 即使用 PROCD 只能使用其 service_triggers 接口来添加依赖
+# ucitrack 只对非 PROCD 程序有效
 uci -q batch <<-EOF >/dev/null
 	delete ucitrack.@zerotier[-1]
 	add ucitrack zerotier
