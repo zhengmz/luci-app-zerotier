@@ -16,8 +16,11 @@ msgstr "基本设置"
 msgid "Interface Info"
 msgstr "接口信息"
 
-msgid "More options"
-msgstr "更多选项"
+msgid "General options"
+msgstr "常规设置"
+
+msgid "Advanced options"
+msgstr "高级设置"
 
 msgid "Port of zerotier service, default 9993"
 msgstr "ZeroTier 运行端口，默认是 9993"
@@ -32,7 +35,7 @@ msgid "Configuration folder"
 msgstr "运行配置目录"
 
 msgid "Persistent configuration folder (for ZT controller mode)"
-msgstr "持久化配置目录（一般用于控制器模式），默认为空"
+msgstr "持久化运行配置目录（一般用于控制器模式），默认为空"
 
 msgid "Copy configuration folder"
 msgstr "运行配置目录保护"

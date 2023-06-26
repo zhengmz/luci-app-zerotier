@@ -22,18 +22,8 @@ start() {
 
 	# Ensure that the service is running
 	if ! $PROG running; then
-		log "Service status isn't running, and retry it ..."
-		# Try restart service once
-		$PROG restart
-
-		# Wait service starting
-		sleep 1
-
-		# Maybe some other error in $PROG
-		if ! $PROG running; then
-			log "Service status isn't running, and retry failed!"
-			return 1
-		fi
+		log "Service status isn't running!"
+		return 1
 	fi
 
 	[ $nat -eq 0 ] && log "NAT disabled in config." && return 0
@@ -45,12 +35,15 @@ start() {
 		sleep 1
 	done
 
-	local zt_devs FW
+	local zt_devs FW ip_segment
 
 	zt_devs="$(ifconfig | grep 'zt' | awk '{print $1}')"
+
 	[ -x "$(command -v nft)" ] && FW="fw4" || FW="fw3"
 	for i in ${zt_devs}
 	do
+		ip_segment=""
+		ip_segment="$(ip route | grep "dev $i proto kernel" | awk '{print $1}')"
 		if [ "$FW" = "fw3" ]; then
 			if iptables -S FORWARD | grep -sq "$i"; then
 				continue
@@ -58,6 +51,7 @@ start() {
 			iptables -I FORWARD -i "$i" -j ACCEPT
 			iptables -I FORWARD -o "$i" -j ACCEPT
 			iptables -t nat -I POSTROUTING -o "$i" -j MASQUERADE
+			[ -n "$ip_segment" ] && iptables -t nat -I POSTROUTING -s "${ip_segment}" -j MASQUERADE
 		else
 			if nft list chain inet fw4 forward | grep -sq "$i"; then
 				continue
@@ -65,13 +59,14 @@ start() {
 			nft insert rule inet fw4 forward iifname "$i" accept
 			nft insert rule inet fw4 forward oifname "$i" accept
 			nft insert rule inet fw4 srcnat oifname "$i" counter masquerade
+			[ -n "$ip_segment" ] && nft insert rule inet fw4 srcnat ip saddr "${ip_segment}" counter masquerade
 		fi
 		log "Added nat rules for zt interface $i!"
 	done
 }
 
 stop() {
-	local zt_devs FW
+	local zt_devs FW ip_segment rule
 
 	zt_devs="$(ifconfig | grep 'zt' | awk '{print $1}')"
 	[ -z "${zt_devs}" ] && return 0
@@ -79,14 +74,19 @@ stop() {
 	[ -x "$(command -v nft)" ] && FW="fw4" || FW="fw3"
 	for i in ${zt_devs}
 	do
+		ip_segment=""
+		ip_segment="$(ip route | grep "dev $i proto kernel" | awk '{print $1}')"
 		if [ "$FW" = "fw3" ]; then
 			iptables -D FORWARD -i "$i" -j ACCEPT 2>/dev/null
 			iptables -D FORWARD -o "$i" -j ACCEPT 2>/dev/null
 			iptables -t nat -D POSTROUTING -o "$i" -j MASQUERADE 2>/dev/null
+			[ -n "$ip_segment" ] && iptables -t nat -D POSTROUTING -s "${ip_segment}" -j MASQUERADE 2>/dev/null
 		else
 			chains="forward srcnat"
+			rule="$i"
+			[ -n "$ip_segment" ] && rule="${rule}|$ip_segment"
 			for c in $chains; do
-				handles=$(nft -a list chain inet fw4 $c | grep -E "$i" | cut -d'#' -f2 | cut -d' ' -f3)
+				handles=$(nft -a list chain inet fw4 $c | grep -E "$rule" | cut -d'#' -f2 | cut -d' ' -f3)
 				for h in $handles; do
 					nft delete rule inet fw4 $c handle $h
 				done

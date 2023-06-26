@@ -12,6 +12,12 @@ LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
 
 ## Changelog / 更新日志
 
+### v2.2
+
+- 增加 srcnat 配置，实现旁路由模式的子网互连
+- 剔除重启 zerotier 服务的功能
+- 在配置页面使用 tab 区分常规与高级配置
+
 ### v2.1
 
 - 配置页面支持所有选项

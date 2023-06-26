@@ -1,7 +1,5 @@
 #!/bin/sh
 
-/etc/init.d/zerotier enabled && /etc/init.d/zerotier restart
-if [ -x /etc/init.d/luci-zerotier ]; then
-	/etc/init.d/luci-zerotier enabled && /etc/init.d/luci-zerotier restart
-fi
+/etc/init.d/luci-zerotier enabled && /etc/init.d/luci-zerotier restart
+
 exit 0
